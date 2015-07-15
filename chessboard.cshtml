@@ -1,0 +1,95 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+
+    <style>
+        .tile {
+            width: 80px;
+            height: 80px;
+            float: left;
+            font-size: 4em;
+            text-align: center;
+            background: linear-gradient(white, lightgrey);
+        }
+
+            .tile.grey {
+                background: linear-gradient(darkgrey, lightgrey);
+            }
+
+        .chessboard {
+            border: 1px solid #222222;
+            width: 640px;
+            margin: 5em auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chessboard">
+        @for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                <div class="tile @GetTileColor(i,j)">@Html.Raw(GetPiece(i, j))</div>
+            }
+            <br style="clear:both" />
+        }
+    </div>
+
+</body>
+</html>
+
+@functions
+{
+    string GetTileColor(int i, int j)
+    {
+        if ((i + j) % 2 == 1)
+            return "grey";
+        else
+            return "";
+    }
+
+    string GetPiece(int i, int j)
+    {
+        if (i == 1)
+            return "&#9823";
+
+        if (i == 6)
+            return "&#9817";
+
+        string key = i.ToString() + j.ToString();
+        if (pieces.ContainsKey(key))
+            return pieces[key];
+
+        return "";
+    }
+
+    Dictionary<string, string> pieces = new Dictionary<string, string>()
+    {
+        { "00", "&#9820" },
+        { "01", "&#9822" },
+        { "02", "&#9821" },
+        { "03", "&#9819" },
+        { "04", "&#9818" },
+        { "05", "&#9821" },
+        { "06", "&#9822" },
+        { "07", "&#9820" },
+
+        { "70", "&#9814" },
+        { "71", "&#9816" },
+        { "72", "&#9815" },
+        { "73", "&#9813" },
+        { "74", "&#9812" },
+        { "75", "&#9815" },
+        { "76", "&#9816" },
+        { "77", "&#9814" }
+    };
+
+}
